@@ -6,6 +6,8 @@ from urls import routes, fronts
 app = TurboFramework(routes, fronts)
 
 with make_server('', 8080, app) as server:
-    print('[INFO] Server running on port 8080...\n\t'
-          'http://127.0.0.1:8080/')
+    print(
+        '[INFO] Server running on port 8080...\n\t'
+        'http://127.0.0.1:8080/'
+    )
     server.serve_forever()
