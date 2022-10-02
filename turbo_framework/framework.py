@@ -18,6 +18,7 @@ class TurboFramework:
             path = f'{path}/'
 
         request = {}
+        # Получаем все данные запроса
         method = environ['REQUEST_METHOD']
         request['method'] = method
 
@@ -31,17 +32,20 @@ class TurboFramework:
             request['data'] = TurboFramework.decode_value(data)
             print(f'[INFO] "POST" request received:{request["data"]}')
 
+        # находим нужный контроллер
+        # отработка паттерна page controller
         if path in self.routes:
             view = self.routes[path]
         else:
-            view = self.routes['error_page']
+            view = self.routes['error-page']
 
-        requests = {}
-
+        # наполняем словарь request элементами
+        # этот словарь получат все контроллеры
+        # отработка паттерна front controller
         for front in self.fronts:
-            front(requests)
-
-        code, body = view(requests)
+            front(request)
+        # запуск контроллера с передачей объекта request
+        code, body = view(request)
         start_response(code, [('Content-Type', 'text/html')])
         return [body.encode('utf-8')]
 

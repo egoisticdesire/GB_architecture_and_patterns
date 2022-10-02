@@ -1,0 +1,19 @@
+<div id="content">
+    <div>
+        <a href="/examples">< Back</a>
+    </div>
+
+    <div>
+        <h1>List of News copies</h1>
+    </div>
+
+    <div>
+        {% for item in objects_list %}
+        <ul>
+            <li>
+                {{item.name}}
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+</div>

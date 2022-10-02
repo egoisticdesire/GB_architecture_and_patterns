@@ -1,0 +1,26 @@
+<div id="content">
+    <div>
+        <a href="/examples">< Back</a>
+    </div>
+
+    <div>
+        <h1>List of categories</h1>
+    </div>
+
+    <div>
+        <ul>
+            {% for item in objects_list %}
+            <li>
+                <a href="/examples/news?id={{item.id}}">
+                    <button class="button">
+                        <span class="text">View news in category </span> <span class="text_item">{{item.name}}</span>
+                        <span class="sep">|</span>
+                        <span class="total">Total News: {{item.news_count()}}</span>
+                    </button>
+                </a>
+
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

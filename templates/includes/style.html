@@ -15,6 +15,13 @@
         color: rgb(171, 178, 191);
     }
 
+    hr {
+        margin: 10px 0;
+        opacity: 25%;
+        border-radius: 12px;
+        height: 2px;
+    }
+
     p {
         padding: 0 0 20px 0;
         line-height: 1.7em;
@@ -136,7 +143,7 @@
     }
 
     #logo_text h1 a .logo_colour {
-        color: #E4EC04;
+        color: rgb(228, 236, 4);
     }
 
     #logo_text a:hover .logo_colour {
@@ -192,7 +199,7 @@
 
     ul#menu li a:hover {
         transform: scale(1.1);
-        color: #E4EC04;
+        color: rgb(228, 236, 4);
         border-radius: 12px 12px 0 0;
     }
 
@@ -200,7 +207,7 @@
         width: 880px;
         overflow: hidden;
         margin: 20px auto 0 auto;
-        padding: 10px 0 150px 0;
+        padding: 10px 0 150px 30px;
     }
 
     #sidebar_container {
@@ -225,6 +232,7 @@
         margin: 0 0 16px 0;
         background-color: rgb(27, 31, 37);
         border-radius: 12px;
+        border: 1px solid rgba(171, 178, 191, 0.1);
     }
 
     .sidebar:hover {
@@ -341,5 +349,142 @@
         background: #E5E5DB;
         color: #47433F;
         border-top: 1px solid rgb(171, 178, 191);
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: calc(100% - 50px);
+        text-decoration: none;
+        outline: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin: 5px 25px;
+        background-color: rgb(27, 31, 37);
+        color: rgb(171, 178, 191);
+        border: 1px solid rgba(171, 178, 191, 0.1);
+        border-radius: 12px;
+        letter-spacing: 2px;
+        transition: .7s all ease-in-out;
+    }
+
+    .button .sep {
+        margin: 0 5px;
+        color: rgba(171, 178, 191, 0.3);
+    }
+
+    .button .total {
+        font-size: 10px;
+    }
+
+    .button .text {
+        margin-right: 3px;
+    }
+
+    .button .text_item {
+        color: rgb(53, 115, 212);
+        text-transform: capitalize;
+    }
+
+    .button:hover .sep, .button:focus .sep {
+        opacity: 0;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .button:hover .total, .button:focus .total {
+        color: rgb(53, 115, 212);
+        font-size: 13px;
+    }
+
+    .button:hover .text, .button:focus .text {
+        margin-right: 5%;
+    }
+
+    .button:hover .text_item, .button:focus .text_item {
+        color: rgb(228, 236, 4);
+    }
+
+    .button .text_examples {
+        margin-right: 3px;
+    }
+
+    .button:hover .text_examples, .button:focus .text_examples {
+        margin-right: 10%;
+    }
+
+    .button .text_item_examples {
+        color: rgb(53, 115, 212);
+        text-transform: capitalize;
+    }
+
+
+    .button:hover .text_item_examples, .button:focus .text_item_examples {
+        margin-left: 10%;
+        color: rgb(228, 236, 4);
+    }
+
+    .button:hover, .button:focus,
+    .news li .button:hover, .news li .button:focus,
+    .category input:focus,
+    .news input:focus {
+        border-radius: 6px;
+        border: 1px solid rgb(53, 115, 212);
+    }
+
+
+    .category form, .news form, .news li {
+        display: flex;
+        align-items: center;
+    }
+
+    .category input, .news input, .news li {
+        outline: none;
+        padding: 5px;
+        font-size: 18px;
+        background-color: rgb(33, 37, 43);
+        color: rgb(171, 178, 191);
+        border: 1px solid rgba(171, 178, 191, 0.1);
+        border-radius: 12px;
+        transition: .7s all ease-in-out;
+    }
+
+    .category input:hover, .news input:hover {
+        background-color: rgb(40, 44, 52);
+    }
+
+    .category input:focus, .news input:focus {
+        background-color: rgb(27, 31, 37);
+    }
+
+    .category input::placeholder, .news input::placeholder {
+        color: rgba(171, 178, 191, 0.5);
+    }
+
+    .news li {
+        display: flex;
+        justify-content: space-between;
+
+        padding: 0 5px !important;
+    }
+
+    .news li .button {
+        width: calc(100% - 5px);
+        text-decoration: none;
+        outline: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: rgb(27, 31, 37);
+        color: rgb(171, 178, 191);
+        border: 1px solid rgba(171, 178, 191, 0.1);
+        border-radius: 12px;
+        letter-spacing: 2px;
+        transition: .7s all ease-in-out;
     }
 </style>
