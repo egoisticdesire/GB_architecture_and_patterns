@@ -1,9 +1,10 @@
 from wsgiref.simple_server import make_server
 
-from turbo_framework.framework import TurboFramework
-from urls import routes, fronts
+from turbo_framework.framework import DebugApp, FakeApplication, TurboFramework
+from urls import fronts
+from views import routes
 
-app = TurboFramework(routes, fronts)
+app = DebugApp(routes, fronts)
 
 with make_server('', 8080, app) as server:
     print(
