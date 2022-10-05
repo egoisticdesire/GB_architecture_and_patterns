@@ -1,3 +1,6 @@
+from log.log_config import LOGGER
+
+
 def parse_input_data(data: str):
     result = {}
 
@@ -38,7 +41,7 @@ class PostRequests:
         if data:
             # декодируем данные
             data_str = data.decode(encoding='utf-8')
-            print(f'[INFO] Line after decoding: {data_str}')
+            LOGGER.info(f'Line after decoding: {data_str}')
             # данные -> словарь
             result = parse_input_data(data_str)
 

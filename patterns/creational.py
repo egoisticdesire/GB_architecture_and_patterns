@@ -105,7 +105,6 @@ class Engine:
 
     def find_category_by_id(self, id):
         for item in self.categories:
-            print(f'item = {item.id}')
             if item.id == id:
                 return item
         raise Exception(f'No category with ID = {id}')
@@ -126,30 +125,29 @@ class Engine:
         value_decode_str = decodestring(value_b)
         return value_decode_str.decode('utf-8')
 
-
-# Синглтон, порождающий паттерн
-class SingletonByName(type):
-    def __init__(cls, name, bases, attrs, **kwargs):
-        super().__init__(name, bases, attrs)
-        cls.__instance = {}
-
-    def __call__(cls, *args, **kwargs):
-        if args:
-            name = args[0]
-        if kwargs:
-            name = kwargs['name']
-
-        if name in cls.__instance:
-            return cls.__instance[name]
-        else:
-            cls.__instance[name] = super().__call__(*args, **kwargs)
-            return cls.__instance[name]
-
-
-class Logger(metaclass=SingletonByName):
-    def __init__(self, name):
-        self.name = name
-
-    @staticmethod
-    def log(text):
-        print(f'[LOG] {text}')
+# # Синглтон, порождающий паттерн
+# class SingletonByName(type):
+#     def __init__(cls, name, bases, attrs, **kwargs):
+#         super().__init__(name, bases, attrs)
+#         cls.__instance = {}
+#
+#     def __call__(cls, *args, **kwargs):
+#         if args:
+#             name = args[0]
+#         if kwargs:
+#             name = kwargs['name']
+#
+#         if name in cls.__instance:
+#             return cls.__instance[name]
+#         else:
+#             cls.__instance[name] = super().__call__(*args, **kwargs)
+#             return cls.__instance[name]
+#
+#
+# class Logger(metaclass=SingletonByName):
+#     def __init__(self, name):
+#         self.name = name
+#
+#     @staticmethod
+#     def log(text):
+#         print(f'[LOG] {text}')

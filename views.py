@@ -1,16 +1,24 @@
+import inspect
+
+from log.log_config import LOGGER
 from turbo_framework.templator import render
-from patterns.creational import Engine, Logger
+from patterns.creational import Engine
+from patterns.structural import Debug, Router
 
 site = Engine()
-logger = Logger('main')
+routes = {}
 
 
+@Router(routes=routes, url='/')
 class Index:
+    @Debug(name='Index')
     def __call__(self, request):
         return '200 OK', render(template_name='index.html')
 
 
+@Router(routes=routes, url='/examples/')
 class Examples:
+    @Debug(name='Examples')
     def __call__(self, request):
         return '200 OK', render(
             template_name='examples.html',
@@ -18,9 +26,11 @@ class Examples:
         )
 
 
+@Router(routes=routes, url='/examples/news/')
 class NewsList:
+    @Debug(name='NewsList')
     def __call__(self, request):
-        logger.log('List of news')
+        LOGGER.info('List of news')
         try:
             category = site.find_category_by_id(int(request['request_params']['id']))
             return '200 OK', render(
@@ -33,18 +43,22 @@ class NewsList:
             return '200 OK', 'No news have been added yet'
 
 
+@Router(routes=routes, url='/examples/categories/')
 class CategoriesList:
+    @Debug(name='CategoriesList')
     def __call__(self, request):
-        logger.log('List of categories')
+        LOGGER.info('List of categories')
         return '200 OK', render(
             template_name='categories.html',
             objects_list=site.categories,
         )
 
 
+@Router(routes=routes, url='/examples/news/create-news/')
 class CreateNews:
     category_id = -1
 
+    @Debug(name='CreateNews')
     def __call__(self, request):
         if request['method'] == 'POST':
             data = request['data']
@@ -76,7 +90,9 @@ class CreateNews:
                 return '200 OK', 'No categories have been added yet'
 
 
+@Router(routes=routes, url='/examples/categories/create-category/')
 class CreateCategory:
+    @Debug(name='CreateCategory')
     def __call__(self, request):
         if request['method'] == 'POST':
             data = request['data']
@@ -104,17 +120,22 @@ class CreateCategory:
             )
 
 
+@Router(routes=routes, url='/contacts/')
 class Contacts:
+    @Debug(name='Contacts')
     def __call__(self, request):
         return '200 OK', render(template_name='contacts.html')
 
 
 class PageNotFound404:
+    @Debug(name='PageNotFound404')
     def __call__(self, request):
         return '404 not found', '404 Page not found'
 
 
+@Router(routes=routes, url='/examples/news/copy-news/')
 class CopyNews:
+    @Debug(name='CopyNews')
     def __call__(self, request):
         request_params = request['request_params']
 
