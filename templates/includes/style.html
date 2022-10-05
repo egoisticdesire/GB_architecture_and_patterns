@@ -430,20 +430,19 @@
     }
 
     .button:hover, .button:focus,
-    .news li .button:hover, .news li .button:focus,
-    .category input:focus,
-    .news input:focus {
+    .form li .button:hover, .form li .button:focus,
+    .form input:focus {
         border-radius: 6px;
         border: 1px solid rgb(53, 115, 212);
     }
 
 
-    .category form, .news form, .news li {
+    .form form, .form li {
         display: flex;
         align-items: center;
     }
 
-    .category input, .news input, .news li {
+    .form input, .form li {
         outline: none;
         padding: 5px;
         font-size: 18px;
@@ -454,26 +453,26 @@
         transition: .5s all ease-in-out;
     }
 
-    .category input:hover, .news input:hover {
+    .form input:hover {
         background-color: rgb(40, 44, 52);
     }
 
-    .category input:focus, .news input:focus {
+    .form input:focus {
         background-color: rgb(27, 31, 37);
     }
 
-    .category input::placeholder, .news input::placeholder {
+    .form input::placeholder {
         color: rgba(171, 178, 191, 0.5);
     }
 
-    .news li {
+    .form li {
         display: flex;
         justify-content: space-between;
 
         padding: 0 5px !important;
     }
 
-    .news li .button {
+    .form li .button {
         width: calc(100% - 5px);
         text-decoration: none;
         outline: none;
@@ -486,5 +485,44 @@
         border-radius: 12px;
         letter-spacing: 2px;
         transition: .5s all ease-in-out;
+    }
+
+    .form .select {
+        outline: none;
+        min-width: 200px;
+        min-height: 300px;
+        margin-right: 10px;
+        padding: 7px;
+        background-color: rgb(27, 31, 37);
+        color: rgb(171, 178, 191);
+        border: 1px solid rgba(171, 178, 191, 0.1);
+        border-radius: 12px;
+    }
+
+    .form .select option {
+        margin: 1px 0;
+        padding: 3px 10px;
+        outline: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 6px;
+    }
+
+    .form .select option:hover {
+        padding: 3px 10px;
+        outline: none;
+        background-color: transparent;
+        color: rgb(228, 236, 4);
+        border: 1px solid rgb(53, 115, 212);
+        border-radius: 6px;
+    }
+
+    .form .select option:checked {
+        padding: 3px 10px;
+        outline: none;
+        background-color: rgb(53, 115, 212);
+        color: rgb(27, 31, 37);
+        border: 1px solid rgb(53, 115, 212);
+        border-radius: 6px;
     }
 </style>

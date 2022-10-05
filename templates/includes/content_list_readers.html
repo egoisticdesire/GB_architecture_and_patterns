@@ -1,0 +1,29 @@
+<div id="content">
+    <h1>Site visitors</h1>
+    <div>
+        <a href="/readers/create-reader">
+            <button class="button">Create reader</button>
+        </a>
+    </div>
+
+    <div>
+        <a href="/readers/add-reader">
+            <button class="button">Add an existing reader</button>
+        </a>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Reader list</h2>
+
+        {% for item in objects_list %}
+        <li>
+            {{ item.name }}
+            {% for news in item.all_news %}
+                {{ news.name }}
+            {% endfor %}
+        </li>
+        {% endfor %}
+    </div>
+</div>

@@ -1,11 +1,12 @@
-import inspect
-
 from log.log_config import LOGGER
+from patterns.behavioral import BaseSerializer, CreateView, EmailNotifier, ListView, SmsNotifier
 from turbo_framework.templator import render
 from patterns.creational import Engine
 from patterns.structural import Debug, Router
 
 site = Engine()
+sms_notifier = SmsNotifier()
+email_notifier = EmailNotifier()
 routes = {}
 
 
@@ -69,6 +70,10 @@ class CreateNews:
             if self.category_id != -1:
                 category = site.find_category_by_id(int(self.category_id))
                 news = site.create_news('games', name, category)
+
+                news.observers.append(sms_notifier)
+                news.observers.append(email_notifier)
+
                 site.all_news.append(news)
 
             return '200 OK', render(
@@ -161,3 +166,49 @@ class CopyNews:
                 template_name='copy-data.html',
                 objects_list=site.news_copies,
             )
+
+
+@Router(routes=routes, url='/readers/')
+class ReadersListView(ListView):
+    queryset = site.readers
+    template_name = 'readers.html'
+
+
+@Router(routes=routes, url='/readers/create-reader/')
+class ReaderCreateView(CreateView):
+    template_name = 'create-reader.html'
+
+    def create_obj(self, data: dict):
+        name = data['name']
+        name = site.decode_value(name)
+        new_obj = site.create_user('reader', name)
+        site.readers.append(new_obj)
+
+
+@Router(routes=routes, url='/readers/add-reader/')
+class AddReaderCreateView(CreateView):
+    template_name = 'add-reader.html'
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['all_news'] = site.all_news
+        context['readers'] = site.readers
+        return context
+
+    def create_obj(self, data: dict):
+        news_name = data['news_name']
+        news_name = site.decode_value(news_name)
+        news = site.get_news(news_name)
+
+        reader_name = data['reader_name']
+        reader_name = site.decode_value(reader_name)
+        reader = site.get_reader(reader_name)
+
+        news.add_reader(reader)
+
+
+@Router(routes=routes, url='/api/')
+class NewsApi:
+    @Debug(name='NewsApi')
+    def __call__(self, request):
+        return '200 OK', BaseSerializer(site.all_news).save()

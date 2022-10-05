@@ -1,0 +1,38 @@
+<div id="content">
+    <div>
+        <a href="/readers/">< Back</a>
+    </div>
+    <br>
+
+    <h1>Add reader</h1>
+
+    <div>
+        <a href="/readers/create-reader">
+            <button class="button">Create reader</button>
+        </a>
+    </div>
+    <hr>
+
+    <div class="form">
+        <form method="post">
+
+            <label>
+                <select class="select" multiple autocomplete="off" name="news_name">
+                    {% for item in all_news %}
+                        <option value="{{item.name}}">{{item.name}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label>
+                <select class="select" multiple autocomplete="off" name="reader_name">
+                    {% for item in readers %}
+                        <option value="{{item.name}}">{{item.name}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <button class="button" type="submit">Save</button>
+        </form>
+    </div>
+</div>
