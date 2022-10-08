@@ -1,9 +1,21 @@
 from copy import deepcopy
 from quopri import decodestring
+from patterns.behavioral import Subject
 
 
 class User:
+    def __init__(self, name):
+        self.name = name
+
+
+class Guest(User):
     pass
+
+
+class Reader(User):
+    def __init__(self, name):
+        super().__init__(name)
+        self.all_news = []
 
 
 class Moderator(User):
@@ -15,15 +27,17 @@ class Admin(User):
 
 
 class UserFactory:
-    user_types = {
+    types = {
+        'guest': Guest,
+        'reader': Reader,
         'moderator': Moderator,
         'admin': Admin,
     }
 
     # Фабричный метод, порождающий паттерн
     @classmethod
-    def create(cls, type_):
-        return cls.user_types[type_]()
+    def create(cls, type_, name):
+        return cls.types[type_](name)
 
 
 # Прототип, порождающий паттерн
@@ -32,11 +46,21 @@ class NewsPrototype:
         return deepcopy(self)
 
 
-class News(NewsPrototype):
+class News(NewsPrototype, Subject):
     def __init__(self, name, category):
         self.name = name
         self.category = category
         self.category.all_news.append(self)
+        self.readers = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.readers[item]
+
+    def add_reader(self, reader: Reader):
+        self.readers.append(reader)
+        reader.all_news.append(self)
+        self.notify()
 
 
 class GamesNews(News):
@@ -89,6 +113,8 @@ class Category:
 # Основной интерфейс проекта
 class Engine:
     def __init__(self):
+        self.guest = []
+        self.readers = []
         self.moderators = []
         self.admins = []
         self.all_news = []
@@ -96,8 +122,8 @@ class Engine:
         self.categories = []
 
     @staticmethod
-    def create_user(type_):
-        return UserFactory.create(type_)
+    def create_user(type_, name):
+        return UserFactory.create(type_, name)
 
     @staticmethod
     def create_category(name, category=None):
@@ -118,6 +144,11 @@ class Engine:
             if item.name == name:
                 return item
         return None
+
+    def get_reader(self, name) -> Reader:
+        for item in self.readers:
+            if item.name == name:
+                return item
 
     @staticmethod
     def decode_value(value):
