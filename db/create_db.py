@@ -12,3 +12,5 @@ with sqlite3.connect(db_path) as db:
         text = file.read()
 
     cursor.executescript(text)
+
+    cursor.close()
