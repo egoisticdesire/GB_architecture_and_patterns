@@ -1,11 +1,10 @@
 from jsonpickle import dumps, loads
 
 from log.log_config import LOGGER
-
-# Наблюдатель, поведенческий паттерн
 from turbo_framework.templator import render
 
 
+# Наблюдатель, поведенческий паттерн
 class Observer:
     def update(self, subject):
         pass
