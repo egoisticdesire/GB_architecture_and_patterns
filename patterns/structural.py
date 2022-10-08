@@ -1,11 +1,9 @@
-# Декоратор, структурный паттерн
-import inspect
-import logging
 from time import time
 
 from log.log_config import LOGGER
 
 
+# Декоратор, структурный паттерн
 class Router:
     def __init__(self, routes, url):
         self.routes = routes

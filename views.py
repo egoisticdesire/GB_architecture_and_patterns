@@ -1,12 +1,15 @@
 from log.log_config import LOGGER
+from patterns.architectural_system import UnitOfWork
 from patterns.behavioral import BaseSerializer, CreateView, EmailNotifier, ListView, SmsNotifier
-from turbo_framework.templator import render
-from patterns.creational import Engine
+from patterns.creational import Engine, MapperRegistry
 from patterns.structural import Debug, Router
+from turbo_framework.templator import render
 
 site = Engine()
 sms_notifier = SmsNotifier()
 email_notifier = EmailNotifier()
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 routes = {}
 
 
@@ -170,8 +173,11 @@ class CopyNews:
 
 @Router(routes=routes, url='/readers/')
 class ReadersListView(ListView):
-    queryset = site.readers
     template_name = 'readers.html'
+
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('reader')
+        return mapper.all()
 
 
 @Router(routes=routes, url='/readers/create-reader/')
@@ -183,6 +189,8 @@ class ReaderCreateView(CreateView):
         name = site.decode_value(name)
         new_obj = site.create_user('reader', name)
         site.readers.append(new_obj)
+        new_obj.mark_new()
+        UnitOfWork.get_current().commit()
 
 
 @Router(routes=routes, url='/readers/add-reader/')
